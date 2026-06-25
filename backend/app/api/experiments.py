@@ -10,7 +10,7 @@ from datetime import datetime
 @jwt_required()
 def get_experiments():
     """获取实验列表"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     status = request.args.get('status')
@@ -37,7 +37,7 @@ def get_experiments():
 @jwt_required()
 def create_experiment():
     """创建实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     if not data:
@@ -81,7 +81,7 @@ def create_experiment():
 @jwt_required()
 def get_experiment(experiment_id):
     """获取单个实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -94,7 +94,7 @@ def get_experiment(experiment_id):
 @jwt_required()
 def update_experiment(experiment_id):
     """更新实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -144,7 +144,7 @@ def update_experiment(experiment_id):
 @jwt_required()
 def delete_experiment(experiment_id):
     """删除实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -160,7 +160,7 @@ def delete_experiment(experiment_id):
 @jwt_required()
 def start_experiment(experiment_id):
     """开始实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -178,7 +178,7 @@ def start_experiment(experiment_id):
 @jwt_required()
 def complete_experiment(experiment_id):
     """完成实验"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -199,7 +199,7 @@ def complete_experiment(experiment_id):
 @jwt_required()
 def fail_experiment(experiment_id):
     """实验失败"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -220,7 +220,7 @@ def fail_experiment(experiment_id):
 @jwt_required()
 def update_progress(experiment_id):
     """更新实验进度"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -242,7 +242,7 @@ def update_progress(experiment_id):
 @jwt_required()
 def get_experiment_stats():
     """获取实验统计信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # 获取各种状态的实验数量
     total = Experiment.query.filter_by(researcher_id=user_id).count()

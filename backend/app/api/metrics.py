@@ -9,7 +9,7 @@ from app import db
 @jwt_required()
 def get_metrics(experiment_id):
     """获取实验指标列表"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -35,7 +35,7 @@ def get_metrics(experiment_id):
 @jwt_required()
 def create_metric(experiment_id):
     """创建实验指标"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -74,7 +74,7 @@ def create_metric(experiment_id):
 @jwt_required()
 def create_metrics_batch(experiment_id):
     """批量创建实验指标"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -119,7 +119,7 @@ def create_metrics_batch(experiment_id):
 @jwt_required()
 def get_metric(metric_id):
     """获取单个指标"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     metric = ExperimentMetric.query.get_or_404(metric_id)
     experiment = Experiment.query.get_or_404(metric.experiment_id)
     
@@ -133,7 +133,7 @@ def get_metric(metric_id):
 @jwt_required()
 def update_metric(metric_id):
     """更新指标"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     metric = ExperimentMetric.query.get_or_404(metric_id)
     experiment = Experiment.query.get_or_404(metric.experiment_id)
     
@@ -170,7 +170,7 @@ def update_metric(metric_id):
 @jwt_required()
 def delete_metric(metric_id):
     """删除指标"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     metric = ExperimentMetric.query.get_or_404(metric_id)
     experiment = Experiment.query.get_or_404(metric.experiment_id)
     
@@ -187,7 +187,7 @@ def delete_metric(metric_id):
 @jwt_required()
 def get_metrics_summary(experiment_id):
     """获取实验指标摘要"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -233,7 +233,7 @@ def get_metrics_summary(experiment_id):
 @jwt_required()
 def get_metrics_timeline(experiment_id):
     """获取指标时间线数据"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限

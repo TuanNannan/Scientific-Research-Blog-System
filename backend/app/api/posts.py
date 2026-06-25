@@ -40,7 +40,7 @@ def get_posts():
 @jwt_required()
 def create_post():
     """创建文章"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     if not data:
@@ -90,7 +90,7 @@ def get_post(post_id):
 @jwt_required()
 def update_post(post_id):
     """更新文章"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     post = Post.query.get_or_404(post_id)
     
     # 检查权限
@@ -128,7 +128,7 @@ def update_post(post_id):
 @jwt_required()
 def delete_post(post_id):
     """删除文章"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     post = Post.query.get_or_404(post_id)
     
     # 检查权限
@@ -166,7 +166,7 @@ def get_comments(post_id):
 @jwt_required()
 def create_comment(post_id):
     """创建评论"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     post = Post.query.get_or_404(post_id)
     
     data = request.get_json()

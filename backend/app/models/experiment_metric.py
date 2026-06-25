@@ -15,14 +15,17 @@ class ExperimentMetric(db.Model):
     recorded_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # 元数据
-    metadata = db.Column(db.JSON)  # 额外的元数据
+    extra_metadata = db.Column('metadata', db.JSON)  # 额外的元数据
     
     def __init__(self, experiment_id, metric_name, metric_value, **kwargs):
         self.experiment_id = experiment_id
         self.metric_name = metric_name
         self.metric_value = metric_value
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key == 'metadata':
+                self.extra_metadata = value
+            else:
+                setattr(self, key, value)
     
     def to_dict(self):
         """转换为字典"""
@@ -35,7 +38,7 @@ class ExperimentMetric(db.Model):
             'step': self.step,
             'phase': self.phase,
             'recorded_at': self.recorded_at.isoformat() if self.recorded_at else None,
-            'metadata': self.metadata
+            'metadata': self.extra_metadata
         }
     
     def __repr__(self):

@@ -122,4 +122,51 @@ export const todoApi = {
   getOverdue: () => api.get('/todos/overdue'),
 }
 
+// 实验阶段API
+export const stageApi = {
+  getList: (experimentId: number) =>
+    api.get(`/experiments/${experimentId}/stages`),
+  initStages: (experimentId: number) =>
+    api.post(`/experiments/${experimentId}/stages/init`),
+  getOne: (id: number) => api.get(`/stages/${id}`),
+  update: (id: number, data: any) => api.put(`/stages/${id}`, data),
+  delete: (id: number) => api.delete(`/stages/${id}`),
+  start: (id: number) => api.post(`/stages/${id}/start`),
+  complete: (id: number) => api.post(`/stages/${id}/complete`),
+  skip: (id: number) => api.post(`/stages/${id}/skip`),
+  updateProgress: (id: number, progress: number) =>
+    api.put(`/stages/${id}/progress`, { progress }),
+}
+
+// 实验日志API
+export const logApi = {
+  getList: (experimentId: number, params?: { page?: number; per_page?: number; log_type?: string; stage_name?: string }) =>
+    api.get(`/experiments/${experimentId}/logs`, { params }),
+  create: (experimentId: number, data: any) =>
+    api.post(`/experiments/${experimentId}/logs`, data),
+  createBatch: (experimentId: number, logs: any[]) =>
+    api.post(`/experiments/${experimentId}/logs/batch`, { logs }),
+  getOne: (id: number) => api.get(`/logs/${id}`),
+  update: (id: number, data: any) => api.put(`/logs/${id}`, data),
+  delete: (id: number) => api.delete(`/logs/${id}`),
+  getTimeline: (experimentId: number) =>
+    api.get(`/experiments/${experimentId}/logs/timeline`),
+}
+
+// 实验里程碑API
+export const milestoneApi = {
+  getList: (experimentId: number, params?: { status?: string }) =>
+    api.get(`/experiments/${experimentId}/milestones`, { params }),
+  create: (experimentId: number, data: any) =>
+    api.post(`/experiments/${experimentId}/milestones`, data),
+  getOne: (id: number) => api.get(`/milestones/${id}`),
+  update: (id: number, data: any) => api.put(`/milestones/${id}`, data),
+  delete: (id: number) => api.delete(`/milestones/${id}`),
+  complete: (id: number) => api.post(`/milestones/${id}/complete`),
+  getOverdue: (experimentId: number) =>
+    api.get(`/experiments/${experimentId}/milestones/overdue`),
+  getStats: (experimentId: number) =>
+    api.get(`/experiments/${experimentId}/milestones/stats`),
+}
+
 export default api

@@ -26,7 +26,7 @@ class AudioFile(db.Model):
     annotation = db.Column(db.JSON)  # 标注信息
     
     # 元数据
-    metadata = db.Column(db.JSON)  # 其他元数据
+    extra_metadata = db.Column('metadata', db.JSON)  # 其他元数据
     uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __init__(self, experiment_id, file_name, file_path, **kwargs):
@@ -69,7 +69,7 @@ class AudioFile(db.Model):
             'transcription': self.transcription,
             'labels': self.labels,
             'annotation': self.annotation,
-            'metadata': self.metadata,
+            'metadata': self.extra_metadata,
             'uploaded_at': self.uploaded_at.isoformat() if self.uploaded_at else None
         }
     

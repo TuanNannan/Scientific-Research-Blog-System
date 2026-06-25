@@ -32,8 +32,8 @@ def register():
     db.session.commit()
     
     # 生成令牌
-    access_token = create_access_token(identity=user.id)
-    refresh_token = create_refresh_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
+    refresh_token = create_refresh_token(identity=str(user.id))
     
     return jsonify({
         'message': 'User registered successfully',
@@ -63,8 +63,8 @@ def login():
         return jsonify({'error': 'Invalid username or password'}), 401
     
     # 生成令牌
-    access_token = create_access_token(identity=user.id)
-    refresh_token = create_refresh_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
+    refresh_token = create_refresh_token(identity=str(user.id))
     
     return jsonify({
         'message': 'Login successful',
@@ -77,7 +77,7 @@ def login():
 @jwt_required()
 def get_current_user():
     """获取当前用户信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get_or_404(user_id)
     
     return jsonify(user.to_dict())
@@ -86,7 +86,7 @@ def get_current_user():
 @jwt_required()
 def update_current_user():
     """更新当前用户信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get_or_404(user_id)
     
     data = request.get_json()

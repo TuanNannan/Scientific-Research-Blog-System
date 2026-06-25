@@ -10,7 +10,7 @@ from datetime import datetime
 @jwt_required()
 def get_todos():
     """获取待办事项列表"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 20, type=int)
     status = request.args.get('status')
@@ -43,7 +43,7 @@ def get_todos():
 @jwt_required()
 def create_todo():
     """创建待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     if not data:
@@ -84,7 +84,7 @@ def create_todo():
 @jwt_required()
 def get_todo(todo_id):
     """获取单个待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     todo = Todo.query.get_or_404(todo_id)
     
     # 检查权限
@@ -97,7 +97,7 @@ def get_todo(todo_id):
 @jwt_required()
 def update_todo(todo_id):
     """更新待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     todo = Todo.query.get_or_404(todo_id)
     
     # 检查权限
@@ -149,7 +149,7 @@ def update_todo(todo_id):
 @jwt_required()
 def delete_todo(todo_id):
     """删除待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     todo = Todo.query.get_or_404(todo_id)
     
     # 检查权限
@@ -165,7 +165,7 @@ def delete_todo(todo_id):
 @jwt_required()
 def complete_todo(todo_id):
     """完成待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     todo = Todo.query.get_or_404(todo_id)
     
     # 检查权限
@@ -183,7 +183,7 @@ def complete_todo(todo_id):
 @jwt_required()
 def cancel_todo(todo_id):
     """取消待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     todo = Todo.query.get_or_404(todo_id)
     
     # 检查权限
@@ -201,7 +201,7 @@ def cancel_todo(todo_id):
 @jwt_required()
 def get_todo_stats():
     """获取待办事项统计信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # 获取各种状态的待办事项数量
     total = Todo.query.filter_by(user_id=user_id).count()
@@ -230,7 +230,7 @@ def get_todo_stats():
 @jwt_required()
 def get_todo_categories():
     """获取所有待办事项分类"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     categories = db.session.query(Todo.category).filter_by(user_id=user_id).distinct().all()
     return jsonify([category[0] for category in categories if category[0]])
 
@@ -238,7 +238,7 @@ def get_todo_categories():
 @jwt_required()
 def get_overdue_todos():
     """获取过期的待办事项"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     overdue_todos = Todo.query.filter(
         Todo.user_id == user_id,

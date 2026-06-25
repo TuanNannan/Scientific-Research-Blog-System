@@ -1,17 +1,6 @@
 import os
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
-from flask_cors import CORS
-from flask_restful import Api
-
-# 初始化扩展
-db = SQLAlchemy()
-migrate = Migrate()
-jwt = JWTManager()
-cors = CORS()
-api = Api()
+from extensions import db, migrate, jwt, cors, api
 
 def create_app(config_name=None):
     """创建Flask应用"""
@@ -29,6 +18,11 @@ def create_app(config_name=None):
     jwt.init_app(app)
     cors.init_app(app)
     api.init_app(app)
+    
+    # 导入模型（在应用上下文中）
+    with app.app_context():
+        from app.models import user, post, experiment, audio_file, experiment_metric, todo
+        from app.models import experiment_stage, experiment_log, experiment_milestone
     
     # 注册蓝图
     from app.api import bp as api_bp
@@ -51,5 +45,8 @@ def create_app(config_name=None):
     
     return app
 
-# 导入模型
-from app import models
+# 为Flask CLI创建应用
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)

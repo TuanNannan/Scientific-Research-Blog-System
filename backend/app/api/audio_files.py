@@ -17,7 +17,7 @@ def allowed_file(filename):
 @jwt_required()
 def get_audio_files(experiment_id):
     """获取实验的音频文件列表"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -33,7 +33,7 @@ def get_audio_files(experiment_id):
 @jwt_required()
 def upload_audio_file(experiment_id):
     """上传音频文件"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     experiment = Experiment.query.get_or_404(experiment_id)
     
     # 检查权限
@@ -87,7 +87,7 @@ def upload_audio_file(experiment_id):
 @jwt_required()
 def get_audio_file(audio_id):
     """获取音频文件信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     audio_file = AudioFile.query.get_or_404(audio_id)
     experiment = Experiment.query.get_or_404(audio_file.experiment_id)
     
@@ -101,7 +101,7 @@ def get_audio_file(audio_id):
 @jwt_required()
 def download_audio_file(audio_id):
     """下载音频文件"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     audio_file = AudioFile.query.get_or_404(audio_id)
     experiment = Experiment.query.get_or_404(audio_file.experiment_id)
     
@@ -122,7 +122,7 @@ def download_audio_file(audio_id):
 @jwt_required()
 def update_audio_file(audio_id):
     """更新音频文件信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     audio_file = AudioFile.query.get_or_404(audio_id)
     experiment = Experiment.query.get_or_404(audio_file.experiment_id)
     
@@ -157,7 +157,7 @@ def update_audio_file(audio_id):
 @jwt_required()
 def delete_audio_file(audio_id):
     """删除音频文件"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     audio_file = AudioFile.query.get_or_404(audio_id)
     experiment = Experiment.query.get_or_404(audio_file.experiment_id)
     
@@ -178,7 +178,7 @@ def delete_audio_file(audio_id):
 @jwt_required()
 def get_audio_stats():
     """获取音频文件统计信息"""
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # 获取用户的实验ID
     experiment_ids = [exp.id for exp in Experiment.query.filter_by(researcher_id=user_id).all()]
